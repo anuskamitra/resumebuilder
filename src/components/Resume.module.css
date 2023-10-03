@@ -1,0 +1,178 @@
+.container{
+      min-width: 850px;
+      flex:1.2;
+      min-height: 600px;     
+      /* height:3508px;
+      width:2480px; */
+      box-shadow: 1px 1px 3px 2px rgba(0.1,0.1,0.1,0.2);
+      --color:#ffffff;
+      background-color: var(--color);
+      display: flex;
+      flex-direction: column;
+      gap:30px;
+      padding:30px;
+      margin: 0;     
+}
+
+.header {
+    display: flex;
+    gap:10px;  
+}
+.headInfo{
+  display: flex;
+  flex-direction: column;
+  padding-top:4%;
+  padding-left: 6%;
+}
+.header .heading{
+    font-size: 4rem;
+    font-weight: 500;
+    text-transform: capitalize;    
+}
+/* */
+.header .links {
+   display: flex;
+   margin-top: 10px;
+   gap: 30px;
+   row-gap:10px; 
+   font-family: 'Courier New', Courier, monospace;  
+   cursor: pointer;
+   font-size: 20px;
+  
+}
+header.link{  
+    align-items: center;
+    
+} 
+ .header .link svg{
+    /* color:var(--color); */
+
+    height:15px;
+    width:20px;   
+ }
+ .photo img{
+ display: flex;
+ flex-direction: column;
+   width: 16rem;
+   height: 16rem;
+   border-radius: 50%;
+   border: black solid;
+  
+  
+ }
+ .main{
+    display: flex;
+    gap:30px;
+
+
+ }
+ .col1{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    gap:19px;
+ }
+ .col2{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    gap:9px;
+ }
+ .section .sectionTitle{
+    border-bottom:3px solid rgb(0, 0, 0);
+    font-size: 2.5rem;
+    font-weight: 500;
+    width: 100%;
+   
+ }
+ .section .content{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    padding: 20px 0 0 0;
+ }
+ .section .content .item{
+    border-bottom: 1px dotted rgb(192, 183, 183);
+    flex:display;
+    flex-direction: column;
+    gap:4px;
+    padding-bottom: 10px;
+ }
+
+ .content .title{
+   font-weight: 500;
+   font-size: 2rem;
+   color: rgb(77, 23, 50);
+   margin-bottom: 0;
+ }
+ .content .degree{
+   margin-bottom: 0;
+   font-weight: 500;
+   font-size: 1.5rem;
+ }
+ .content .subTitle{
+   /* color: var(--color); */
+   font-weight: 400;
+   font-size: 1.8rem;
+   margin-bottom: 0;
+  
+ }
+ .content .instituteName{
+   font-weight: 300;
+   font-size: 1.5rem;
+ }
+ .content .overview{
+   font-size: 1rem ;
+ }
+  .content .link{
+      display: flex;
+      gap:5px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: black;
+      align-items: center;
+  }
+  .content .link svg{
+    height: 16px;
+    width: 16px;
+    /* color: var(--color); */
+  }
+  .content .date, .content .location{
+   display: flex;
+   gap:5px;
+   align-items:center;
+   font-size: 1.1rem;
+  }
+  .content .date svg,.content .location svg{
+   height: 14px;
+   width: 14px;
+   /* color: var(--color); */
+  }
+  .content .numberd{
+   padding-left: 18px;
+   font-size: 1.2rem;
+  }
+  .hidden{
+   display: none;
+  }
+  .section .overview{
+    font-weight: 200;
+    font-size: 1.3rem;
+  }
+  /* @media print {
+   .container {
+     width: 100%;
+     height: 100%;
+   }
+   /* ... the rest of the rules ... */
+ /* }
+ @page {
+   size: A4;
+   margin: 0;
+    */
+ /* }  */
+ /* @media print {
+   @page {
+     size: 50mm 150mm;
+   }
+ } */
