@@ -85,7 +85,7 @@
     text-decoration-thickness: 2px;
     font-weight: 500; */
     border-bottom: 2px solid rgb(97, 23, 97);
-    color:#751771
+    color:#a23f9d
 }
 .body{
   padding:30px;
@@ -139,6 +139,9 @@
   gap:2px;
   align-items: center;
   padding-right: 8px;
+  padding-left: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
  
   /*  
  

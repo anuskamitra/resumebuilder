@@ -73,7 +73,7 @@ const Resume = forwardRef((props, ref) => {
               )}
               {item.location && (
                 <div className={Styles.location}>
-                  <MapPin /> Remote
+                  <MapPin />{item.location}
                 </div>
               )}
             </div>
@@ -219,7 +219,7 @@ const Resume = forwardRef((props, ref) => {
     ),
   };
   const swapSourceTarget = (source, target) => {
-    console.log(source, target);
+    // console.log(source, target);
     if (!source || !target) return;
     const tempCol = [[...columns[0]], [...columns[1]]];
     let sourceRowIndex = tempCol[0].findIndex((item) => item === source);
@@ -236,12 +236,12 @@ const Resume = forwardRef((props, ref) => {
     }
 
     const tempSource = tempCol[sourceColumnIndex][sourceRowIndex];
-    console.log(tempSource);
+    // console.log(tempSource);
     console.log(tempCol[targetColumnIndex][targetRowIndex]);
     tempCol[sourceColumnIndex][sourceRowIndex] =
       tempCol[targetColumnIndex][targetRowIndex];
     tempCol[targetColumnIndex][targetRowIndex] = tempSource;
-    console.log(tempCol);
+    // console.log(tempCol);
     setColumns(tempCol);
   };
   useEffect(() => {
@@ -259,7 +259,7 @@ const Resume = forwardRef((props, ref) => {
     container.style.setProperty("--color", props.activeColor);
   }, [props.activeColor]);
 
-  console.log(info.basicInfo.detail.firstName);
+  // console.log(info.basicInfo.detail.firstName);
   // console.log(photo);
 
   return (

@@ -1,0 +1,126 @@
+ *{
+    box-sizing: border-box;
+}
+
+.login{
+    margin:0 auto;
+    width: 100%;
+    min-height: 100vh;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: rgba(243, 246, 218, 0.5);
+}
+.errMsg{
+    color: rgb(185, 33, 33);
+    font-size: 20px;
+    font-weight: 700;
+}
+.container{
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    display: flex;  
+    background: rgba(237, 237, 237, 0.362);
+    box-shadow: 0 0 10px rgba(140, 138, 138, 0.5); 
+
+} 
+.colLeft{
+    padding: 20px;
+    display: flex;
+    width: 100%;
+    clip-path: polygon(0 0,10% 100%,100% 5%);
+    background: rgba(181, 202, 244, 0.362);
+}
+.colRight{
+    padding: 30px;
+    display: flex;
+    padding: 60px 30px ;
+    width:50%;
+    margin-left: -10%;
+
+}
+@media(max-width:575px){
+    .login .container{
+        flex-direction: column;
+        box-shadow: none;
+    }
+    .colRight,
+    .colLeft{
+        width: 100%;
+        margin: 0;
+        clip-path: none;
+    }
+    .colRight{
+        padding: 30px;
+    }
+   
+
+
+}
+.text{
+    position:relative;
+    width: 100%;
+    color:rgb(36, 32, 62)
+}
+ .text h2{
+    margin:0 0 15px 0;
+    font-size: 30px;
+    font-weight: 700;
+}
+.text p{
+    margin:0 0 20px 0;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+}
+.btn{
+    display: inline-block;
+    padding: 7px 10px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin-left: 3px;
+    color: rgb(38, 20, 79);
+}
+
+.loginForm{
+    position: relative;
+    width: 100%;
+}
+.loginForm h2{
+    margin:0 2px 15px 0;
+    font-size: 30px;
+    font-weight: 700;
+    color: rgb(49, 6, 106);
+    letter-spacing: 2px;
+}
+
+.loginForm p{
+    margin:0 0 10px 0;
+    text-align: left;
+    color: rgb(144, 168, 187);
+    font-size: 15px;
+}
+.loginBtn{
+   display: inline-block;
+   width: 100%; 
+   margin-top: 5px;
+   background: transparent;
+   cursor: pointer;
+   outline: none;
+   border: 1px solid #ccc;
+   border-radius: 20px;
+   height: 35px;
+   padding: 0 10px;
+   transition: 0.5s;
+   
+
+   
+}
+.loginBtn:hover{
+    background-color: rgb(197, 210, 227);
+    color:rgb(14, 49, 84)
+}

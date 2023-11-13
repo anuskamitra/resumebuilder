@@ -84,36 +84,10 @@ export default function Body() {
       console.error('Network error:', error);
     }
   }
-  //   useEffect(()=>{
-  //   try{
-  //     axios.get("http://localhost:8000/fetchdata")
-  //     .then(response=>{
-  //        console.log("response+"+JSON.stringify(response.data));
-  //       //   console.log("response+"+JSON.stringify(response.data.basicInfoDetail.detail));
-  //           console.log("response+"+JSON.stringify(response.data.workExpDetails.details[0]));
-  //           console.log("response+"+JSON.stringify(response.data.workExpDetails.details[1]));
-  //       //     let workExpDetails=response.data.workExpDetails.details[0];
-  //       //     setValues(response.data.basicInfoDetail.detail);
-  //       //     console.log(values);
-  //       //     setValues((prev)=>({...prev,workExpDetails}))
-  //       let tempResume=resumeInfo;
-  //       tempResume[sections.basicInfo].detail=response.data.basicInfoDetail.detail
-  //           console.log(JSON.stringify(tempResume));
-       
-  //         setResumeInfo(tempResume);
-  //         // setValues(response.data)    
-  //         console.log(JSON.stringify(tempResume));
-  //         console.log(resumeInfo[sections.basicInfo])
-  //     })
-     
-  //   }catch(err){
-  //     console.log(err);
-  //   }
-  // },[])
-    console.log("ref"+resumeRef);
-    for(let key in resumeRef){
-       console.log(key)
-    }
+    // console.log("ref"+resumeRef);
+    // for(let key in resumeRef){
+    //    console.log(key)
+    // }
   return (
     <div className={Styles.container}>
         <p className={Styles.heading}>

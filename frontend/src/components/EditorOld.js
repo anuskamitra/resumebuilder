@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { X } from "react-feather";
 import Styles from "./Editor.module.css";
-import InputControl from "./InputControl";
+import {InputControl} from "./InputControl";
 import axios from "axios";
 
 export default function Editor(props) {

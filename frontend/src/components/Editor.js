@@ -13,15 +13,13 @@ export default function Editor(props) {
   // console.log(sections[Object.keys(sections)[0]]); //The value of the key which is "basic info"
   // console.log(sections[activeKey])   //same answer as above as Object.keys(sections)[0]=activekey
   // console.log(sections.basicInfo); //will give the same result as above 
-console.log(information[sections.workExp]?.details)
+  // console.log(information[sections.workExp]?.details)
 
   const[sectionTitle,setSectionTitle]=useState(sections[Object.keys(sections)[0]]);
   const [activeKey, setactiveKey] = useState(Object.keys(sections)[0]);
   const[activeDetailIndex,setActiveDetailIndex]=useState(0)
   const [values,setValues]=useState({
-    basicInfo:information[sections.basicInfo]?.detail?information[sections.basicInfo].detail:{},
-    //  workExp:information[sections.workExp].details?information[sections.workExp].details:[{}],
-    // workExp:Array.from(information[sections.workExp].details),
+    basicInfo:information[sections.basicInfo]?.detail?{...information[sections.basicInfo].detail}:{},
     workExp:[{}],
     project:[{}],
     education:[{}],
@@ -30,31 +28,95 @@ console.log(information[sections.workExp]?.details)
     other:"",
 
   })
-  console.log(values)
-  // useEffect(()=>{
-  //   try{
-  //     axios.get("http://localhost:8000/fetchdata")
-  //     .then(response=>{
-  //        console.log("response+"+JSON.stringify(response.data));
-  //       //   console.log("response+"+JSON.stringify(response.data.basicInfoDetail.detail));
-  //           console.log("response+"+JSON.stringify(response.data.workExpDetails.details[0]));
-  //           console.log("response+"+JSON.stringify(response.data.workExpDetails.details[1]));
-  //       //     let workExpDetails=response.data.workExpDetails.details[0];
-  //       //     setValues(response.data.basicInfoDetail.detail);
-  //       //     console.log(values);
-  //       //     setValues((prev)=>({...prev,workExpDetails}))
+  // console.log(values)
+  // console.log(information)
+  useEffect(()=>{
+    try{
+      axios.get("http://localhost:8000/fetchdata")
+      .then(response=>{
+        //  console.log("response+"+JSON.stringify(response.data));
+        //   console.log("response+"+JSON.stringify(response.data.basicInfoDetail.detail));
+        // console.log("response+"+JSON.stringify(response.data.workExpDetails.details[0]));
+        // console.log("response+"+JSON.stringify(response.data.workExpDetails.details[1]));
+        //     let workExpDetails=response.data.workExpDetails.details[0];
+        //     setValues(response.data.basicInfoDetail.detail);
+        //     console.log(values);
+        //     setValues((prev)=>({...prev,workExpDetails}))
             
-  //       let workExpDetails=[response.data.workExpDetails.details]
-  //           setValues((prev)=>({...prev,workExp:workExpDetails[0]}));
-  //           console.log(values.workExp);
+        let workExpDetails=response.data.workExpDetails;
+        let basicInfoDetail=response.data.basicInfoDetail;
+        let projectDetails=response.data.projectDetails;
+        let educationDetails=response.data.educationDetails;
+        let achievementDetails=response.data.achievementDetails;
+        let summayDetails=response.data.summayDetails;
+        let otherDetails=response.data.otherDetails
 
-  //          console.log("values "+JSON.stringify(values))
-  //         // setValues(response.data)    
-  //     })
-  //   }catch(err){
-  //     console.log(err);
-  //   }
-  // },[])
+             console.log(workExpDetails)
+
+            setValues((prev)=>({...prev,workExp:[...workExpDetails.details],basicInfo:{...basicInfoDetail.detail},project:[...projectDetails.details],education:[...educationDetails.details],other:otherDetails.detail,summary:summayDetails.detail,achievements:[...achievementDetails.points]}));
+            props.setInformation(prev=>({
+              ...prev,
+              [sections.workExp]:{
+                ...prev[sections.workExp],
+                details:[...workExpDetails.details],
+                sectionTitle:workExpDetails.sectionTitle
+               
+                
+                
+              },
+              [sections.basicInfo]:{
+                ...prev[sections.basicInfo],
+                detail:{...basicInfoDetail.detail},
+                sectionTitle:basicInfoDetail.sectionTitle
+                
+              },
+              [sections.project]:{
+                ...prev[sections.project],
+                details:[...projectDetails.details],
+                sectionTitle:projectDetails.sectionTitle
+                
+                
+              },
+              [sections.education]:{
+                ...prev[sections.education],
+                details:[...educationDetails.details],
+                sectionTitle:educationDetails.sectionTitle
+              
+                
+              },
+              [sections.achievements]:{
+                ...prev[sections.achievements],
+                points:[...achievementDetails.points],
+                sectionTitle:achievementDetails.sectionTitle
+                
+              },
+              [sections.summary]:{
+                ...prev[sections.summary],
+                detail:summayDetails.detail,
+                sectionTitle:summayDetails.sectionTitle
+                
+              },
+              [sections.other]:{
+                  ...prev[sections.other],
+                  detail:otherDetails.detail,
+                  sectionTitle:otherDetails.sectionTitle
+                  
+                  
+              }
+              
+            }))
+          //   console.log(values.project[activeDetailIndex])
+          //   console.log(values.workExp);
+          //   console.log(information)
+          //   console.log(JSON.stringify(information))
+
+          //  console.log("values "+JSON.stringify(values))
+          // setValues(response.data)    
+      })
+    }catch(err){
+      console.log(err);
+    }
+  },[])
 
 
   const handleClick=()=>{
@@ -67,7 +129,7 @@ console.log(information[sections.workExp]?.details)
           [sections.basicInfo]:
           {...prev[sections.basicInfo],
             detail:values.basicInfo,
-            sectionTitle:sectionTitle,
+            sectionTitle,
           }
         }))
         break
@@ -103,6 +165,19 @@ console.log(information[sections.workExp]?.details)
              
        }))   
        break
+       case sections.achievements:
+       let tempDetails=[...values.achievements];
+       console.log(tempDetails)
+       tempDetails=tempDetails.filter((point)=>point!="")
+       console.log(tempDetails)
+        props.setInformation(prev=>({
+         ...prev,
+         [sections.achievements]:{
+           ...prev[sections.achievements],
+           points:[...tempDetails],
+           sectionTitle
+         }
+       }))
        case sections.summary:
         props.setInformation(prev=>({
          ...prev,
@@ -117,7 +192,7 @@ console.log(information[sections.workExp]?.details)
        props.setInformation(prev=>({
         ...prev,
         [sections.other]:{
-          ...prev[sections.education],
+          ...prev[sections.other],
           detail:values.other,
           sectionTitle
         }
@@ -126,21 +201,9 @@ console.log(information[sections.workExp]?.details)
 
 
     }
-    console.log(information)
+    console.log(values.project[activeDetailIndex])
   }
 
-// const handleOnChange=(fieldName,event)=>{
-//   console.log(event.target.value)
-//   console.log(values);
-//   console.log(fieldName)
-//   let tempValues=values
-//   let tempDetails=tempValues[activeKey]
-//  tempDetails[activeDetailIndex][fieldName]=event.target.value
-//  console.log(tempValues);
-//   setValues(tempValues)
-//   console.log(values);
-
-// }
 
   const workExp = (
     <div className={Styles.details}>
@@ -185,7 +248,7 @@ console.log(information[sections.workExp]?.details)
         <InputControl
           label="Certification Link"
           placeholder="Enter certificate link"
-             value={values.workExp[activeDetailIndex]?.certificationLink?values.workExp?.certificationLink:""}
+             value={values.workExp[activeDetailIndex]?.certificationLink?values.workExp[activeDetailIndex].certificationLink:""}
             onChange={(event) =>
               {
               let  tempDetails=values.workExp?values.workExp:[]
@@ -204,7 +267,7 @@ console.log(information[sections.workExp]?.details)
         <InputControl
           label="Location"
           placeholder="Enter work location (eg:remote)"
-           value={values.workExp[activeDetailIndex]?.location?values.workExp?.location:""}
+           value={values.workExp[activeDetailIndex]?.location?values.workExp[activeDetailIndex]?.location:""}
           onChange={(event) =>
             {
             let tempDetails=values.workExp?values.workExp:[]
@@ -224,7 +287,7 @@ console.log(information[sections.workExp]?.details)
           label="Start Date"
           type="date"
           placeholder="Enter starting date"
-           value={values.workExp[activeDetailIndex]?.startDate?values.workExp?.startDate:""}
+           value={values.workExp[activeDetailIndex]?.startDate?values.workExp[activeDetailIndex]?.startDate:""}
           onChange={(event) =>
             {
              let tempDetails=values.workExp?values.workExp:[]
@@ -242,7 +305,7 @@ console.log(information[sections.workExp]?.details)
           label="End date"
           type="date"
           placeholder="Enter End date"
-           value={values.workExp[activeDetailIndex]?.endDate?values.workExp?.endDate:""}
+           value={values.workExp[activeDetailIndex]?.endDate?values.workExp[activeDetailIndex]?.endDate:""}
           onChange={(event) =>
             {
              let tempDetails=values.workExp?values.workExp:[]
@@ -342,6 +405,7 @@ console.log(information[sections.workExp]?.details)
           label="Overview"
           placeholder="Enter basic overviweof the project"
             value={values.project[activeDetailIndex]?.overview?values.project[activeDetailIndex].overview:""}
+            
             // value={values.project[activeDetailIndex]?.projectName?values.project[activeDetailIndex].projectName:""}
             onChange={(event) =>
               {
@@ -353,6 +417,7 @@ console.log(information[sections.workExp]?.details)
                }))
               }
             }
+            
         />
       </div>
       <div className={Styles.row}>
@@ -484,18 +549,44 @@ console.log(information[sections.workExp]?.details)
         <label>List your achievements</label>
         <InputControl
           placeholder="Line 1"
-            // value={values.achievement?.points ? values.achievement?.points[0] : ""}
-          //   onChange={(event) => handlePointUpdate(event.target.value, 0)}
+            value={values.achievements?.[0]? values.achievements[0] : ""}
+            onChange={(event) => {
+              let tempDetails=values.achievements?values.achievements:[]
+              tempDetails[0]=event.target.value;
+              setValues(prev=>({
+                ...prev,
+                achievements:[...tempDetails]
+              }))
+            }
+
+            }
         />
         <InputControl
           placeholder="Line 2"
-          //   value={values.points ? values.points[1] : ""}
-          //   onChange={(event) => handlePointUpdate(event.target.value, 1)}
+          value={values.achievements?.[1]? values.achievements[1] : ""}
+          onChange={(event) => {
+            let tempDetails=values.achievements?values.achievements:[]
+            tempDetails[1]=event.target.value;
+            setValues(prev=>({
+              ...prev,
+              achievements:[...tempDetails]
+            }))
+          }
+        }
         />
         <InputControl
           placeholder="Line 3"
-          //   value={values.points ? values.points[2] : ""}
-          //   onChange={(event) => handlePointUpdate(event.target.value, 2)}
+          value={values.achievements?.[2]? values.achievements[2] : ""}
+          onChange={(event) => {
+            let tempDetails=values.achievements?values.achievements:[]
+            tempDetails[2]=event.target.value;
+          
+            setValues(prev=>({
+              ...prev,
+              achievements:[...tempDetails]
+            }))
+          }
+        }
         />
       </div>
     </div>
@@ -544,17 +635,40 @@ console.log(information[sections.workExp]?.details)
         return "";
     }
   };
-  const handleAddNew=()=>{
 
-  console.log(values[activeKey])
-  // console.log(Object.keys(values[activeKey][activeDetailIndex]))
+  const handlePointUpdate = (value, index) => {
+    console.log(value);
+    const tempValues=values.achievements ;
+    console.log(tempValues)
+    tempValues[index]=[... tempValues[index],value]
+    console.log(tempValues)
+  //  if (!Array.isArray(tempValues.points)) tempValues.points = [];
+  //  tempValues.achievements.points[index] = value;
+  //  setValues(tempValues);
+
+ };
+  const handleAddNew=()=>{
+  // console.log(values[activeKey])
   if(!values[activeKey][activeDetailIndex]){
     return;
   }
-  // let tempValues=values
-  // tempValues[activeKey]=[...tempValues[activeKey],{}]
-  //   setValues(tempValues);
     setActiveDetailIndex(values[activeKey].length);
+  }
+  const handleDeleteDetail=(index)=>{
+    const tempdetails=values[activeKey];
+    tempdetails.splice(index, 1);
+    console.log(index);
+    // props.setInformation(prev=>({
+    //   ...prev,
+    //   [sections[activeKey]]:{
+
+    //     ... [information[sections[activeKey]]],
+    //     details:tempdetails
+    //   }
+    // }))
+    handleClick();
+    setActiveDetailIndex(0);
+    console.log(values[activeKey])
   }
   useEffect(()=>{
     setSectionTitle(sections[activeKey])
@@ -587,11 +701,17 @@ console.log(information[sections.workExp]?.details)
         />
          <div className={Styles.chips}>
         {information[sections[activeKey]].details?.map((item,index)=>(
-          <div className={Styles.chip} onClick={()=>setActiveDetailIndex(index)}>
+          <div className={`${Styles.chip} ${activeDetailIndex===index? Styles.active:""}` } onClick={()=>setActiveDetailIndex(index)} key={index}>
              {sections[activeKey]}{index+1}
+             <X
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      handleDeleteDetail(index);
+                    }}
+                  />
             </div>
         ))}
-        {information[sections[activeKey]].details?
+        {information[sections[activeKey]].details && information[sections[activeKey]].details.length>0?
           <div className={Styles.new} onClick={handleAddNew} >
               +New
             </div>

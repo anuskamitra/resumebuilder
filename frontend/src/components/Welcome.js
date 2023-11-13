@@ -1,104 +1,124 @@
+import React from "react";
+import GoogleButton from "react-google-button";
+import { InputControlForWelcome } from "./InputControl";
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import Styles from "./Welcome.module.css";
 
-import React from 'react'
-import GoogleButton from 'react-google-button'
-import InputControl from './InputControl'
-import axios from 'axios';
-import { useState } from 'react'
-import {useNavigate} from 'react-router-dom'
- 
 function Welcome() {
-   const navigate = useNavigate();
- const [credentials,setCredentials]=useState({email:"",password:""})
-  const [credentialsForLogin,setCredentialsForLogin]=useState({email:"",password:""})
+  const navigate = useNavigate();
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
+ const[isRegistered, setIsRegistered]=useState(false);
+ 
+  const googleAuth = () => {
+    window
+      .open("http://localhost:8000/auth/google", "_self")
+      .then((response) => {
+        if (response.status == 200) {
+          console.log(response.data);
+          navigate("/resume");
+        }
+      });
+  };
 
-    const googleAuth=()=>{
-        window.open("http://localhost:8000/auth/google","_self")
-        .then(response=>{
-          if(response.status==200){
-            console.log(response.data);
+  const handleCredentialRegister = async (e) => {
+    e.preventDefault();
+    console.log("email " + credentials.email);
+    console.log("password " + credentials.password);
+    try {
+      axios
+        .post("http://localhost:8000/register", credentials)
+        .then((response) => {
+          console.log("response+ " + response);
+          if (response.data===true) {
+            console.log("hello")
             navigate("/resume");
+          } else {
+            console.log("res  "+response.data)
+            setIsRegistered(true);
           }
-        })
+        }).catch((error)=>{
+          console.log("error found "+error);
+        });
+    } catch (error) {
+      console.log("from axios frontend   " + error);
     }
+  };
 
-
-  const handleCredentialRegister=async(e)=>{
-    e.preventDefault();
-    console.log("email "+credentials.email);
-    console.log("password "+credentials.password)
-    try{
-     axios.post("http://localhost:8000/register",credentials)
-     .then(response=>{
-      console.log("response+ "+response)
-      if(response.status==200){
-        navigate("/resume");
-      }
-      else{
-        navigate("/")
-      }
-     })
-    }
-    catch(error){
-        console.log("from axios frontend   "+error);
-     }
-  }
-  const handleCredentialLogin=async(e)=>{
-    e.preventDefault();
-    console.log("email "+credentialsForLogin.email);
-    console.log("password "+credentialsForLogin.password)
-    try{
-     axios.post("http://localhost:8000/login",credentialsForLogin)
-     .then(response=>{
-      console.log("response"+response)
-      if(response.status==200){
-        navigate("/resume");
-      };
-     })
-    }
-    catch(error){
-        console.log("from axios frontend   "+error);
-     }
-  }
   return (
-    <div>
-    <div>Welcome</div>
-    <InputControl 
-     label="Enter your mailid"
-     placeholder="example@gmail.com"
-     name="email"
-      value={credentials.email}
-      onChange={(event) => setCredentials({...credentials,email:event.target.value})} 
-     />
-     <InputControl 
-     label="Enter your Password"
-     placeholder="PASSWORD"
-     name="password"
-      value={credentials.password}
-      onChange={(event) => setCredentials({...credentials,password:event.target.value})} 
-     />
-     <button type="submit" onClick={handleCredentialRegister}>Register</button>
+    <React.Fragment>
+   
+   
 
-     <InputControl 
-     label="Enter your mailid"
-     placeholder="example@gmail.com"
-     name="email"
-      value={credentialsForLogin.email}
-      onChange={(event) => setCredentialsForLogin({...credentialsForLogin,email:event.target.value})} 
-     />
-       <InputControl 
-     label="Enter your Password"
-     placeholder="PASSWORD"
-     name="password"
-      value={credentialsForLogin.password}
-      onChange={(event) => setCredentialsForLogin({...credentialsForLogin,password:event.target.value})} 
-     />
-       <button type="submit" onClick={handleCredentialLogin}>Register</button>
-    <GoogleButton
-     onClick={googleAuth}
-  />
-  
-  </div>
-  )
+    <div className={Styles.login}>
+    {isRegistered?<p className={Styles.errMsg}>Alreday Registered! Login to continue</p>:""}
+      <div className={Styles.container}>
+        <div className={Styles.colLeft}>
+          <div className={Styles.text}>
+            <h2>Welcome To ResumeBuilder!</h2>
+            <p>
+              Create your own resume <br />
+              for Free.
+            </p>
+            <p>
+              Already have an account?<br/>
+              <Link className={Styles.btn} to="/login">
+                Login
+              </Link>
+            </p>
+          </div>
+        </div>
+
+        <div className={Styles.colRight}>
+          <div className={Styles.loginForm}>
+            <h2>Signup</h2>
+            <p>
+              <InputControlForWelcome
+                label="Enter your Email"
+                placeholder="example@gmail.com"
+                name="email"
+                value={credentials.email}
+                type="email"
+                onChange={(event) =>
+                  setCredentials({ ...credentials, email: event.target.value })
+                }
+              />
+            </p>
+            <p>
+              <InputControlForWelcome
+                label="Enter Password"
+                placeholder="Password"
+                name="password"
+                value={credentials.password}
+                type="password"
+                required
+                onChange={(event) =>
+                  setCredentials({
+                    ...credentials,
+                    password: event.target.value,
+                  })
+                }
+              />
+            </p>
+            <p>
+              <button type="submit" className={Styles.loginBtn} onClick={handleCredentialRegister}>
+                Register
+              </button>
+            </p>
+            <p>
+              <GoogleButton 
+              type="light"
+              label="Signup with Google"
+              onClick={googleAuth} />
+            </p>
+          </div>
+        </div>
+      </div>
+    </div> 
+    {/* :""} */}
+    </React.Fragment>
+  );
 }
 
-export default Welcome
+export default Welcome;
