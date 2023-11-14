@@ -271,6 +271,6 @@ app.post("/login", async (req, res) => {
   }
 });
 const port = process.env.PORT || 8080;
-app.listen(process.env.PORT, function (req, res) {
+app.listen(port, function (req, res) {
   console.log("listening");
 });
